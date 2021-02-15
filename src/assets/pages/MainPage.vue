@@ -5,14 +5,29 @@
       <div class="main__header">
         <div class="main__header__content">
           <div class="main__header__content_text">Primary market</div>
-          <app-view />
+          <app-view
+            :viewData="rawData"
+            :viewFilters="filters"
+          />
         </div>
         <app-logo />
       </div>
-      <app-filters />
-      <app-market />
-      <div class="main__button">
-        <button class="main__button_show">
+      <app-filters
+      :filtersData="rawData"
+      />
+      <div class="market">
+        <div class="market__wrapper">
+          <app-market-item
+            v-for="marketItem in filteredDataItems"
+            :key="marketItem.article"
+            :itemData="marketItem"
+          />
+        </div>
+      </div>
+      <div class="main__button" :class="{ 'element-hide': itemsCount === rawData.length}">
+        <button class="main__button_show"
+        @click="changeItemsCount"
+        >
           <span>See more</span>
           <img :src="require('../images/btn-arrow.svg')" alt="see more">
         </button>
@@ -24,22 +39,10 @@
 <script>
 import AppFilters from '../components/appFilters';
 import appLogo from "../components/appLogo";
-import AppMarket from "../components/appMarket";
+import AppMarketItem from '../components/appMarketItem';
 import appView from "../components/appView";
 
-export default {
-  name: "MainPage",
-
-  components: {
-    appLogo,
-    appView,
-    AppMarket,
-    AppFilters,
-  },
-
-  data() {
-    return {
-      marketItems: [
+const rawData = [
     {
       image: "item-image-blue.svg",
       name: "Renovation appartments in Town",
@@ -49,8 +52,9 @@ export default {
       target: "500.000",
       month: 6,
       interest: "18",
-      article: "T1",
-      available: true
+      article: "I1",
+      available: true,
+      view: "open"
     },
     {
       image: "item-image-pink.svg",
@@ -61,8 +65,9 @@ export default {
       target: "800.000",
       month: 3,
       interest: "38",
-      article: "T2",
-      available: true
+      article: "I2",
+      available: true,
+      view: "funded"
     },
     {
       image: "item-image-green.svg",
@@ -73,8 +78,9 @@ export default {
       target: "300.000",
       month: 8,
       interest: "6",
-      article: "T3",
-      available: true
+      article: "I3",
+      available: true,
+      view: "repaid"
     },
     {
       image: "item-image-pink.svg",
@@ -85,8 +91,9 @@ export default {
       target: "100.000",
       month: 2,
       interest: "61",
-      article: "T4",
-      available: true
+      article: "I4",
+      available: true,
+      view: "comming"
     },
     {
       image: "item-image-green.svg",
@@ -97,8 +104,9 @@ export default {
       target: "950.000",
       month: 9,
       interest: "22",
-      article: "T5",
-      available: true
+      article: "I5",
+      available: true,
+      view: "open"
     },
     {
       image: "item-image-blue.svg",
@@ -109,30 +117,131 @@ export default {
       target: "200.000",
       month: 5,
       interest: "47",
-      article: "T6",
-      available: true
+      article: "I6",
+      available: true,
+      view: "repaid"
+    },
+    {
+      image: "item-image-green.svg",
+      name: "Renovation appartments in Town",
+      city: "Berlin, Germany",
+      percent: "52",
+      leftToPay: "682,564",
+      target: "300.000",
+      month: 8,
+      interest: "6",
+      article: "I7",
+      available: true,
+      view: "repaid"
+    },
+    {
+      image: "item-image-pink.svg",
+      name: "Renovation appartments in Town",
+      city: "Saint-Petersburg, Russia",
+      percent: "89",
+      leftToPay: "92,564",
+      target: "100.000",
+      month: 2,
+      interest: "61",
+      article: "I8",
+      available: true,
+      view: "comming"
+    },
+    {
+      image: "item-image-green.svg",
+      name: "Renovation appartments in Town",
+      city: "Chicago, USA",
+      percent: "25",
+      leftToPay: "822,564",
+      target: "950.000",
+      month: 9,
+      interest: "22",
+      article: "I9",
+      available: true,
+      view: "open"
     }
-      ],
+      ];
+
+export default {
+  name: "MainPage",
+
+  components: {
+    appLogo,
+    appView,
+    AppFilters,
+    AppMarketItem,
+  },
+
+  data() {
+    return {
+      rawData,
+      dataItems: [],
+      itemsCount: 3,
+      filters: {
+          view: 'all',
+          search: '',
+        },
     }
   },
 
   computed: {
-    // makePlusCount() {
-    //   for (let i=0; i<10; i++) {
-    //     mainPlus.push[i]( {
-    //       id: i,
-    //     } );
-    //   }
-    //   return mainPlus;
-    // }
+    // marketItems() {
+    //   return this.rawData.map((item) => ({
+    //     ...item,
+    //   }));
+    // },
+
+    addMarketItems() {
+      return this.itemsCount;
+    },
+
+    filteredDataItems() {
+      let filteredDataItems = this.rawData;
+
+      if (this.filters.search) {
+        const concatMarketItem = (marketItem) =>
+        [marketItem.article, marketItem.name, marketItem.city].join(' ').toLowerCase();
+        filteredDataItems = filteredDataItems.filter((marketItem) =>
+        concatMarketItem(marketItem).includes(this.filters.search.toLowerCase()),
+        );
+      }
+
+      return filteredDataItems;
+    },
   },
+
+  mounted() {
+      for (let i = 0; i < this.itemsCount; i++) {
+        this.dataItems.push(rawData[i]);
+      }
+    },
+
+    methods: {
+      changeItemsCount(event) {
+        if (this.itemsCount === rawData.length) {
+          event.target.classList.add = 'main__button-hide';
+          return;
+        } else if (this.itemsCount < rawData.length) {
+          this.itemsCount += 3;
+        }
+      },
+    },
+
+    watch: {
+      addMarketItems(newCount, oldCount) {
+        for (let i = oldCount; i < newCount; i++) {
+        this.dataItems.push(rawData[i]);
+        }
+      },
+    }
+
 }
 </script>
 
 <style lang="sass" scoped>
 .main
   width: 100%
-  background: linear-gradient(50deg, $main-back-color 70%, rgba(31, 34, 37, 0.985) 30%)
+  background: linear-gradient(50deg, $main-back-color 80%, rgba(31, 34, 37, 0.985) 20%)
   font-family: $family
   color: #fff
   font-size: 18px
@@ -192,7 +301,27 @@ export default {
       border: none
       border-top: 1px solid #F5A623
       border-bottom: 1px solid #F5A623
+      outline: none
       margin: $margin*4
+      &:hover > span + img, &:hover > span
+        transform: scale(1.1)
+      span
+        transition: 0.5s
       img
-        margin-left: $margin*2
+        transition: 0.5s
+        margin-left: $margin*3
+
+.market
+  width: 100%
+  margin-top: $margin*20
+  &__wrapper
+    margin: 0 auto
+    display: flex
+    justify-content: space-around
+    align-items: center
+    flex-wrap: wrap
+
+.element-hide
+  display: none
+
 </style>

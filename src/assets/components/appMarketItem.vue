@@ -13,7 +13,7 @@
           <span>{{ itemData.percent + '%' }}</span>
           <div class="market__item__content_percent-number--border"></div>
         </div>
-        <div class="market__item__content_percent-left">{{ '€' + itemData.leftToPay }}</div>
+        <div class="market__item__content_percent-left">{{ '€' + itemData.leftToPay + ' ' + 'left' }}</div>
       </div>
       <div class="market__item__content_stats">
         <div class="market__item__content_stats_targt">
@@ -37,14 +37,25 @@
 export default {
     name: 'appMarketItem',
 
+    data() {
+      return {
+        itnData: this.itemData,
+        itemCount: 3
+      }
+    },
+
     props: {
-      itemData  : {
+      itemData: {
         type: Object,
         default() {
           return {}
         },
       },
-    }
+    },
+
+    computed: {
+
+    },
 }
 </script>
 

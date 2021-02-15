@@ -5,11 +5,11 @@
         <label for="view-radio-1">All</label>
       </div>
       <div class="view__form_radio">
-        <input id="view-radio-2" type="radio" name="radio" value="open" :checked="filter.view === 'open'">
+        <input id="view-radio-2" type="radio" name="radio" value="open">
         <label for="view-radio-2">Open</label>
       </div>
       <div class="view__form_radio">
-        <input id="view-radio-3" type="radio" name="radio" value="funded" :checked="filter.view === 'funded'">
+        <input id="view-radio-3" type="radio" name="radio" value="funded">
         <label for="view-radio-3">Funded</label>
       </div>
       <div class="view__form_radio">
@@ -26,9 +26,14 @@
         id="search"
         class="search_input"
         placeholder="Search"
-        v-model="filter.search"
+        v-model="filters.search"
         >
       </div>
+      <!-- 
+        v-model="filter.search"
+      :checked="filter.view === 'open'"
+      :checked="filter.view === 'funded'"
+      -->
   </div>
 </template>
 
@@ -39,36 +44,43 @@ export default {
 
     data() {
       return {
-        filter: {
-          view: 'all',
-          search: '',
-        }
+        data: this.viewData,
+        filters: this.viewFilters,
       }
+    },
+
+    props: {
+      viewData: {
+        type: Array,
+        default() {
+          return [];
+        },
+      },
+      viewFilters: {
+        type: Object,
+        default() {
+          return {};
+        },
+      },
     },
 
     computed: {
-      filterSearch() {
-        return this.filter.search;
-      }
     },
 
     watch: {
-      filter: {
+      filters: {
         handler(nV, oV) {
           console.log(nV.search, oV.search);
         },
         deep: true,
       }
-      // filterSearch(nV, oV) {
-      //   console.log(nV, oV);
-      // }
     },
 
-    methods: {
-      onInput(event) {
-        this.filter.search = event.target.value;
-      }
-    }
+    // methods: {
+    //   onInput(event) {
+    //     this.filter.search = event.target.value;
+    //   }
+    // }
 }
 </script>
 

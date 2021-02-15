@@ -68,6 +68,21 @@
 <script>
 export default {
     name: 'appFilters',
+
+    data() {
+      return {
+
+      }
+    },
+
+    props: {
+      filtersData: {
+        type: Array,
+        default() {
+          return [];
+        },
+      }
+    },
 }
 </script>
 
