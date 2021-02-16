@@ -1,76 +1,130 @@
 {
-  "item": [
+  "items": [
     {
       "image": "item-image-blue.svg",
       "name": "Renovation appartments in Town",
-      "city": "Riga, Latvia",
+      "country": "Riga, Latvia",
       "percent": "48",
       "leftToPay": "345,564",
       "target": "500.000",
       "month": 6,
       "interest": "18",
-      "article": "T1",
-      "available": true
+      "article": "I1",
+      "project": "Renovation",
+      "invested": true,
+      "view": "open"
     },
     {
       "image": "item-image-pink.svg",
-      "name": "Renovation appartments in Town",
-      "city": "Paris, France",
+      "name": "New appartments in Town",
+      "country": "Paris, France",
       "percent": "78",
       "leftToPay": "126,164",
       "target": "800.000",
       "month": 3,
       "interest": "38",
-      "article": "T2",
-      "available": true
+      "article": "I2",
+      "project": "New",
+      "invested": false,
+      "view": "funded"
     },
     {
       "image": "item-image-green.svg",
-      "name": "Renovation appartments in Town",
-      "city": "Berlin, Germany",
+      "name": "Best appartments in Town",
+      "country": "Berlin, Germany",
       "percent": "52",
       "leftToPay": "682,564",
       "target": "300.000",
-      "month": 11,
+      "month": 8,
       "interest": "6",
-      "article": "T3",
-      "available": true
+      "article": "I3",
+      "project": "Best",
+      "invested": true,
+      "view": "repaid"
     },
     {
       "image": "item-image-pink.svg",
-      "name": "Renovation appartments in Town",
-      "city": "Saint-Petersburg, Russia",
+      "name": "Free appartments in Town",
+      "country": "Saint-Petersburg, Russia",
       "percent": "89",
       "leftToPay": "92,564",
       "target": "100.000",
       "month": 2,
       "interest": "61",
-      "article": "T4",
-      "available": true
+      "article": "I4",
+      "project": "Free",
+      "invested": false,
+      "view": "comming"
     },
     {
       "image": "item-image-green.svg",
-      "name": "Renovation appartments in Town",
-      "city": "Chicago, USA",
+      "name": "Amazing appartments in Town",
+      "country": "Chicago, USA",
       "percent": "25",
-      "leftToPay": "922,564",
-      "target": "800.000",
-      "month": 15,
+      "leftToPay": "822,564",
+      "target": "950.000",
+      "month": 9,
       "interest": "22",
-      "article": "T5",
-      "available": true
+      "article": "I5",
+      "project": "Amazing",
+      "invested": true,
+      "view": "open"
     },
     {
       "image": "item-image-blue.svg",
       "name": "Renovation appartments in Town",
-      "city": "Venice, Italy",
+      "country": "Venice, Italy",
       "percent": "71",
       "leftToPay": "275,564",
       "target": "200.000",
       "month": 5,
       "interest": "47",
-      "article": "T6",
-      "available": true
+      "article": "I6",
+      "project": "Renovation",
+      "invested": false,
+      "view": "repaid"
+    },
+    {
+      "image": "item-image-green.svg",
+      "name": "Best appartments in Town",
+      "country": "Berlin, Germany",
+      "percent": "52",
+      "leftToPay": "682,564",
+      "target": "300.000",
+      "month": 8,
+      "interest": "6",
+      "article": "I7",
+      "project": "Best",
+      "invested": false,
+      "view": "repaid"
+    },
+    {
+      "image": "item-image-pink.svg",
+      "name": "New appartments in Town",
+      "country": "Saint-Petersburg, Russia",
+      "percent": "89",
+      "leftToPay": "92,564",
+      "target": "100.000",
+      "month": 2,
+      "interest": "61",
+      "article": "I8",
+      "project": "New",
+      "invested": true,
+      "view": "comming"
+    },
+    {
+      "image": "item-image-green.svg",
+      "name": "Amazing appartments in Town",
+      "country": "Chicago, USA",
+      "percent": "25",
+      "leftToPay": "822,564",
+      "target": "950.000",
+      "month": 9,
+      "interest": "22",
+      "article": "I9",
+      "project": "Amazing",
+      "invested": false,
+      "view": "open"
     }
-  ]
+      ]
 }

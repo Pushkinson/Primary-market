@@ -7,59 +7,69 @@
       <div class="filters__items_rate filters__item">
         <div class="filters__items_rate-name item__name">Interest rate</div>
         <div class="filters__items_rate-select item__select">
-          <select name="rate">
-            <option value="select">Select</option>
-            <option value="rate">Rate</option>
+          <select clsss="select-rate" name="rate" v-model="filters.rate">
+            <option class="option-selected" value="select">Select</option>
+            <option value="low">less 50%</option>
+            <option value="high">more 50%</option>
           </select>
         </div>
       </div>
       <div class="filters__items_ltv filters__item">
         <div class="filters__items_ltv-name item__name">LTV</div>
         <div class="filters__items_ltv-select item__select">
-          <select name="ltv">
-            <option value="select">Select</option>
-            <option value="ltv">LTV</option>
+          <select name="ltv" v-model="filters.leftToPay">
+            <option class="option-selected" value="select">Select</option>
+            <option value="low">less €500.000</option>
+            <option value="high">more €500.000</option>
           </select>
         </div>
       </div>
       <div class="filters__items_country filters__item">
         <div class="filters__items_country-name item__name">Country</div>
         <div class="filters__items_country-select item__select">
-          <select name="country">
-            <option value="select">Select</option>
-            <option value="latvia">Latvia</option>
-            <option value="france">France</option>
-            <option value="germany">Germany</option>
+          <select name="country" v-model="filters.country">
+            <option class="option-selected" value="select">Select</option>
+            <option value="Riga, Latvia">Latvia</option>
+            <option value="Paris, France">France</option>
+            <option value="Berlin, Germany">Germany</option>
+            <option value="Saint-Petersburg, Russia">Russia</option>
+            <option value="Chicago, USA">USA</option>
+            <option value="Venice, Italy">Italy</option>
           </select>
         </div>
       </div>
       <div class="filters__items_project filters__item">
         <div class="filters__items_project-name item__name">Project</div>
         <div class="filters__items_project-select item__select">
-          <select name="project">
-            <option value="select">Select</option>
-            <option value="project">Project</option>
+          <select name="project" v-model="filters.project">
+            <option class="option-selected" value="select">Select</option>
+            <option value="Renovation">Renovation</option>
+            <option value="New">New</option>
+            <option value="Best">Best</option>
+            <option value="Free">Free</option>
+            <option value="Amazing">Amazing</option>
           </select>
         </div>
       </div>
       <div class="filters__items_type filters__item">
         <div class="filters__items_type-name item__name">Loan type</div>
         <div class="filters__items_type-select item__select">
-          <select name="type">
-            <option value="select">Select</option>
-            <option value="type">Type</option>
+          <select name="type" v-model="filters.type">
+            <option class="option-selected" value="select">Select</option>
+            <option value="low">from €100.000</option>
+            <option value="high">from €500.000</option>
           </select>
         </div>
       </div>
     </div>
     <div class="filters__bottom">
       <div class="filters__bottom_hide">
-        <input type="checkbox" name="hide" id="checkbox-show">
+        <input type="checkbox" name="hide" id="checkbox-show" v-model="filters.invested">
         <label class="filters__bottom_hide-label-1" for="checkbox-show"></label>
         <label class="filters__bottom_hide-label-2" for="checkbox-show">Hide my invested projects</label>
       </div>
       <div class="filters__bottom_show">
-        <button class="filters__bottom-show button">Show</button>
+        <button class="filters__bottom-show button" @click="refreshFilters">Refresh filters</button>
       </div>
     </div>
   </div>
@@ -71,18 +81,30 @@ export default {
 
     data() {
       return {
-
+        filters: this.filtersData,
       }
     },
 
     props: {
       filtersData: {
-        type: Array,
+        type: Object,
         default() {
-          return [];
+          return {};
         },
       }
     },
+
+    methods: {
+      refreshFilters() {
+        const refreshData = 'Select';
+        this.$emit('refreshFilters', refreshData);
+        console.log('hihi');
+
+        // const rate = document.querySelector('rate');
+
+        // rate.options[0].selected = refreshData;
+      }
+    }
 }
 </script>
 
@@ -117,6 +139,7 @@ export default {
 
     &-hide
       border-radius: 38px
+      outline: none
       img
         margin-left: $margin*3
 
@@ -189,5 +212,6 @@ export default {
 
     &-show
       border-radius: 4px
+      outline: none
 
 </style>

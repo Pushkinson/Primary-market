@@ -1,32 +1,32 @@
 <template>
   <div class="market__item">
     <div class="market__item__header">
-      <div class="market__item__header_image"><img :src=" require('../images/' + itemData.image) " alt="blue"></div>
+      <div class="market__item__header_image"><img :src=" require('../images/' + item.image) " alt="blue"></div>
       <div class="market__item__header_content">
-        <div class="market__item__header_content-name">{{ itemData.name }}</div>
-        <div class="market__item__header_content-city">{{ itemData.city }}</div>
+        <div class="market__item__header_content-name">{{ item.name }}</div>
+        <div class="market__item__header_content-city">{{ item.country }}</div>
       </div>
     </div>
     <div class="market__item__content">
       <div class="market__item__content_percent">
         <div class="market__item__content_percent-number">
-          <span>{{ itemData.percent + '%' }}</span>
+          <span>{{ item.percent + '%' }}</span>
           <div class="market__item__content_percent-number--border"></div>
         </div>
-        <div class="market__item__content_percent-left">{{ '€' + itemData.leftToPay + ' ' + 'left' }}</div>
+        <div class="market__item__content_percent-left">{{ '€' + item.leftToPay + ' ' + 'left' }}</div>
       </div>
       <div class="market__item__content_stats">
         <div class="market__item__content_stats_targt">
           <div class="market__item__content_stats_target-name">Target</div>
-          <div class="market__item__content_stats_target-price">{{ '€' + itemData.target }}</div>
+          <div class="market__item__content_stats_target-price">{{ '€' + item.target }}</div>
         </div>
         <div class="market__item__content_stats_period">
           <div class="market__item__content_stats_period-name">Period</div>
-          <div class="market__item__content_stats_period-month">{{ itemData.month + ' ' + 'months' }}</div>
+          <div class="market__item__content_stats_period-month">{{ item.month + ' ' + 'months' }}</div>
         </div>
         <div class="market__item__content_stats_rate">
           <div class="market__item__content_stats_rate-name">Rate</div>
-          <div class="market__item__content_stats_rate-percent">{{ itemData.interest + '%' }}</div>
+          <div class="market__item__content_stats_rate-percent">{{ item.interest + '%' }}</div>
         </div>
       </div>
     </div>
@@ -39,8 +39,7 @@ export default {
 
     data() {
       return {
-        itnData: this.itemData,
-        itemCount: 3
+        item: this.itemData,
       }
     },
 
@@ -51,10 +50,6 @@ export default {
           return {}
         },
       },
-    },
-
-    computed: {
-
     },
 }
 </script>
