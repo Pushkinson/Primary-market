@@ -1,32 +1,62 @@
 <template>
   <div class="main__header__content_view view">
       <div class="view__form_radio">
-        <input id="view-radio-1" type="radio" name="radio" value="all" v-model="filters.view">
+        <input
+          id="view-radio-1"
+          type="radio"
+          name="radio"
+          value="all"
+          v-model="filters.view"
+        >
         <label for="view-radio-1">All</label>
       </div>
       <div class="view__form_radio">
-        <input id="view-radio-2" type="radio" name="radio" value="open" v-model="filters.view">
+        <input
+          id="view-radio-2"
+          type="radio"
+          name="radio"
+          value="open"
+          v-model="filters.view"
+        >
         <label for="view-radio-2">Open</label>
       </div>
       <div class="view__form_radio">
-        <input id="view-radio-3" type="radio" name="radio" value="funded" v-model="filters.view">
+        <input
+          id="view-radio-3"
+          type="radio"
+          name="radio"
+          value="funded"
+          v-model="filters.view"
+        >
         <label for="view-radio-3">Funded</label>
       </div>
       <div class="view__form_radio">
-        <input id="view-radio-4" type="radio" name="radio" value="repaid" v-model="filters.view">
+        <input
+          id="view-radio-4"
+          type="radio"
+          name="radio"
+          value="repaid"
+          v-model="filters.view"
+        >
         <label for="view-radio-4">Repaid</label>
       </div>
       <div class="view__form_radio">
-        <input id="view-radio-5" type="radio" name="radio" value="comming" v-model="filters.view">
+        <input
+          id="view-radio-5"
+          type="radio"
+          name="radio"
+          value="comming"
+          v-model="filters.view"
+        >
         <label for="view-radio-5">Coming soon</label>
       </div>
       <div class="view__search">
         <input
-        type="text"
-        id="search"
-        class="search_input"
-        placeholder="Search"
-        v-model="filters.search"
+          type="text"
+          id="search"
+          class="search_input"
+          placeholder="Search"
+          v-model="filters.search"
         >
       </div>
   </div>
@@ -39,7 +69,6 @@ export default {
 
     data() {
       return {
-        filters: this.viewFilters,
       }
     },
 
@@ -52,13 +81,10 @@ export default {
       },
     },
 
-    watch: {
-      filters: {
-        handler() {
-          this.$emit('onFilterChange', this.filters)
-        },
-        deep: true,
-      }
+    computed: {
+      filters() {
+        return this.viewFilters;
+      },
     },
 }
 </script>

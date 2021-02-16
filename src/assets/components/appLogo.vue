@@ -5,8 +5,6 @@
 </template>
 
 <script>
-// import logo from '../images/logo.svg'
-
 export default {
     name: "AppLogo",
 

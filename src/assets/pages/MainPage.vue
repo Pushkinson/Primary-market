@@ -1,7 +1,6 @@
 <template>
   <div class="main">
     <div class="main__wrapper">
-      <!-- <div class="main__plus_background" v-for="item in mainCount" :key="item"><span>+</span></div> -->
       <div class="main__header">
         <div class="main__header__content">
           <div class="main__header__content_text">Primary market</div>
@@ -13,23 +12,24 @@
         <app-logo />
       </div>
       <app-filters
-      :filtersData="filters"
-      @onFilterChange="onFilterChange"
-      @refreshFilters="refreshFiltersData"
-      />
+        :filtersData="filters"
+        @onFilterChange="onFilterChange"
+        @refreshFilters="refreshFiltersData"
+        />
       <div class="market">
         <div class="market__wrapper">
           <app-market-item
-            v-for="marketItem in marketItems"
+            v-for="marketItem in filteredDataItems"
             :key="marketItem.article"
             :itemData="marketItem"
           />
         </div>
-        <!-- v-for="marketItem in marketItemsToRender" -->
       </div>
-      <div class="main__button" :class="{ 'element-hide': DATA_LOADED}">
+      <div class="main__button"
+        v-if="!DATA_LOADED"
+      >
         <button class="main__button_show"
-        @click="getData"
+          @click="getData"
         >
           <span>See more</span>
           <img :src="require('../images/btn-arrow.svg')" alt="see more">
@@ -59,15 +59,15 @@ export default {
   data() {
     return {
       filters: {
-          view: 'all',
-          search: '',
-          rate: 'select',
-          leftToPay: 'select',
-          country: 'select',
-          project: 'select',
-          type: 'select',
-          invested: false,
-        },
+        view: 'all',
+        search: '',
+        rate: '',
+        leftToPay: '',
+        country: '',
+        project: '',
+        type: '',
+        invested: false,
+      },
     }
   },
 
@@ -77,62 +77,20 @@ export default {
       'DATA_LOADED'
     ]),
 
-    marketItems() {
+    filteredDataItems() {
+      let filteredDataItems = [...this.ITEMS];
       const filterView = this.filters;
 
-      let resultItems = this.filteredDataItems.filter((marketItem) => {
-        switch (filterView.view) {
-          case 'all': return true;
-          default: return marketItem.view === filterView.view;
-        }
-      });
+      if (this.filters.view !== "all") {
+        filteredDataItems = filteredDataItems.filter((item) => filterView.view === item.view);
+      }
 
       if (this.filters.search) {
         const concatMarketItem = (marketItem) =>
           [marketItem.name, marketItem.country, marketItem.leftToPay, marketItem.target].join(' ').toLowerCase();
 
-        resultItems = resultItems.filter((marketItem) =>
-          concatMarketItem(marketItem).includes(this.filters.search.toLowerCase()),
-        );
-      }
-
-      // resultItems = resultItems.filter((marketItem) => {
-      //   switch (filterView.rate) {
-      //     case 'Select': return true;
-      //     case 'high': if (marketItem.rate > 50) return marketItem;
-      //     /* falls through */
-      //     case 'low': if (marketItem.rate <= 50) return marketItem;
-      //     /* falls through */
-      //     default: return true;
-      //   }
-      // });
-
-
-
-      return resultItems;
-    },
-
-    filteredDataItems() {
-      let filteredDataItems = this.ITEMS;
-      const filterView = this.filters;
-
-      if (this.filters.view === "all") {
-        filteredDataItems = filteredDataItems.filter((item) => item.view)
-      } else if (this.filters.view === "open") {
-        filteredDataItems = filteredDataItems.filter((item) => item.view)
-      } else if (this.filters.view === "funded") {
-        filteredDataItems = filteredDataItems.filter((item) => item.view)
-      } else if (this.filters.view === "repaid") {
-        filteredDataItems = filteredDataItems.filter((item) => item.view)
-      } else if (this.filters.view === "comming") {
-        filteredDataItems = filteredDataItems.filter((item) => item.view)
-      }
-
-      if (this.filters.search) {
-        const concatMarketItem = (marketItem) =>
-        [marketItem.article, marketItem.name, marketItem.city, marketItem.leftToPay, marketItem.target, marketItem.interest].join(' ').toLowerCase();
         filteredDataItems = filteredDataItems.filter((marketItem) =>
-        concatMarketItem(marketItem).includes(this.filters.search.toLowerCase()),
+          concatMarketItem(marketItem).includes(this.filters.search.toLowerCase()),
         );
       }
 
@@ -160,77 +118,25 @@ export default {
         });
       }
 
-      if (this.filters.country == 'Riga, Latvia') {
-        filteredDataItems = filteredDataItems.filter(item => {
-          if (item.country == 'Riga, Latvia') return true;
-          return false;
-        });
-      } else if (this.filters.country == 'Paris, France') {
-        filteredDataItems = filteredDataItems.filter(item => {
-          if (item.country == 'Paris, France') return true;
-          return false;
+      if (filterView.country) {
+        filteredDataItems = filteredDataItems.filter((marketItem) => {
+          if (marketItem.country === filterView.country) {
+            return true;
+          } else {
+            return false;
+          }
         });
       }
 
-      filteredDataItems = filteredDataItems.filter((marketItem) => {
-        switch (filterView.country) {
-          /* falls through */
-          case 'Riga, Latvia':
-            if (marketItem.country == 'Riga, Latvia') return true;
-            else return false;
-          /* falls through */
-          case 'Paris, France':
-            if (marketItem.country == 'Paris, France') return true;
-            else return false;
-          /* falls through */
-          case 'Berlin, Germany':
-            if (marketItem.country == 'Berlin, Germany') return true;
-            else return false;
-          /* falls through */
-          case 'Saint-Petersburg, Russia':
-            if (marketItem.country == 'Saint-Petersburg, Russia') return true;
-            else return false;
-          /* falls through */
-          case 'Chicago, USA':
-            if (marketItem.country == 'Chicago, USA') return true;
-            else return false;
-          /* falls through */
-          case 'Venice, Italy':
-            if (marketItem.country == 'Venice, Italy') return true;
-            else return false;
-          /* falls through */
-          default: true;
-        }
-        return true;
-      });
-
-      filteredDataItems = filteredDataItems.filter((marketItem) => {
-        switch (filterView.project) {
-          /* falls through */
-          case 'Renovation':
-            if (marketItem.project == 'Renovation') return true;
-            else return false;
-          /* falls through */
-          case 'New':
-            if (marketItem.project == 'New') return true;
-            else return false;
-          /* falls through */
-          case 'Best':
-            if (marketItem.project == 'Best') return true;
-            else return false;
-          /* falls through */
-          case 'Free':
-            if (marketItem.project == 'Free') return true;
-            else return false;
-          /* falls through */
-          case 'Amazing':
-            if (marketItem.project == 'Amazing') return true;
-            else return false;
-          /* falls through */
-          default: true;
-        }
-        return true;
-      });
+      if (filterView.project) {
+        filteredDataItems = filteredDataItems.filter((marketItem) => {
+          if (marketItem.project === filterView.project) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
 
       if (this.filters.type == 'high') {
         filteredDataItems = filteredDataItems.filter(item => {
@@ -244,26 +150,13 @@ export default {
         });
       }
 
-      if (this.filters.invested === true) {
+      if (this.filters.invested) {
         filteredDataItems = filteredDataItems.filter(item => {
-          if (item.invested === true) return false;
-          return true;
+          return item.invested;
         });
       }
 
-
       return filteredDataItems;
-    },
-  },
-
-  mutations: {
-    refreshFiltersData(data) {
-      this.filters.country = data;
-      this.filters.leftToPay = data;
-      this.filters.project = data;
-      this.filters.rate = data;
-      this.filters.type = data;
-      this.filters.invested = false;
     },
   },
 
@@ -276,18 +169,13 @@ export default {
       this.filters = {...filter};
     },
 
-    refreshFiltersData(data) {
-      this.filters.country = data;
-      this.filters.leftToPay = data;
-      this.filters.project = data;
-      this.filters.rate = data;
-      this.filters.type = data;
+    refreshFiltersData() {
+      this.filters.country = null;
+      this.filters.leftToPay = null;
+      this.filters.project = null;
+      this.filters.rate = null;
+      this.filters.type = null;
       this.filters.invested = false;
-
-      const rate = document.querySelectorAll('.option-selected');
-      rate.forEach((option) => {
-        option.selected = true;
-      });
     },
 
     getData() {
@@ -386,8 +274,4 @@ export default {
     justify-content: space-around
     align-items: center
     flex-wrap: wrap
-
-.element-hide
-  display: none
-
 </style>

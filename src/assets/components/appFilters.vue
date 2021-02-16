@@ -1,75 +1,105 @@
 <template>
   <div class="filters">
     <div class="filters__button">
-      <button class="filters__button-hide button">Hide filter <img :src="require('../images/arrow-down.svg')"></button>
+      <button class="filters__button-hide button"
+        @click="filtersHide = !filtersHide"
+      >
+      {{ buttonText }}
+      <img
+        :class="{['rotate']: filtersHide}" :src="require('../images/arrow-down.svg')"
+        >
+      </button>
     </div>
-    <div class="filters__container">
-      <div class="filters__items_rate filters__item">
-        <div class="filters__items_rate-name item__name">Interest rate</div>
-        <div class="filters__items_rate-select item__select">
-          <select clsss="select-rate" name="rate" v-model="filters.rate">
-            <option class="option-selected" value="select">Select</option>
-            <option value="low">less 50%</option>
-            <option value="high">more 50%</option>
-          </select>
+    <div class="filters__element"
+      v-show="!filtersHide"
+    >
+      <div class="filters__container">
+        <div class="filters__items_rate filters__item">
+          <div class="filters__items_rate-name item__name">Interest rate</div>
+          <div class="filters__items_rate-select item__select">
+            <select
+              clsss="select-rate"
+              name="rate"
+              v-model="filters.rate"
+            >
+              <option value="low">less 50%</option>
+              <option value="high">more 50%</option>
+            </select>
+          </div>
+        </div>
+        <div class="filters__items_ltv filters__item">
+          <div class="filters__items_ltv-name item__name">LTV</div>
+          <div class="filters__items_ltv-select item__select">
+            <select
+              name="ltv"
+              v-model="filters.leftToPay"
+            >
+              <option value="low">less €500.000</option>
+              <option value="high">more €500.000</option>
+            </select>
+          </div>
+        </div>
+        <div class="filters__items_country filters__item">
+          <div class="filters__items_country-name item__name">Country</div>
+          <div class="filters__items_country-select item__select">
+            <select
+              name="country"
+              v-model="filters.country"
+            >
+              <option value="Riga, Latvia">Latvia</option>
+              <option value="Paris, France">France</option>
+              <option value="Berlin, Germany">Germany</option>
+              <option value="Saint-Petersburg, Russia">Russia</option>
+              <option value="Chicago, USA">USA</option>
+              <option value="Venice, Italy">Italy</option>
+            </select>
+          </div>
+        </div>
+        <div class="filters__items_project filters__item">
+          <div class="filters__items_project-name item__name">Project</div>
+          <div class="filters__items_project-select item__select">
+            <select
+              name="project"
+              v-model="filters.project"
+            >
+              <option value="Renovation">Renovation</option>
+              <option value="New">New</option>
+              <option value="Best">Best</option>
+              <option value="Free">Free</option>
+              <option value="Amazing">Amazing</option>
+            </select>
+          </div>
+        </div>
+        <div class="filters__items_type filters__item">
+          <div class="filters__items_type-name item__name">Loan type</div>
+          <div class="filters__items_type-select item__select">
+            <select
+              name="type"
+              v-model="filters.type"
+            >
+              <option value="low">from €100.000</option>
+              <option value="high">from €500.000</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div class="filters__items_ltv filters__item">
-        <div class="filters__items_ltv-name item__name">LTV</div>
-        <div class="filters__items_ltv-select item__select">
-          <select name="ltv" v-model="filters.leftToPay">
-            <option class="option-selected" value="select">Select</option>
-            <option value="low">less €500.000</option>
-            <option value="high">more €500.000</option>
-          </select>
+      <div class="filters__bottom">
+        <div class="filters__bottom_hide">
+          <input
+            type="checkbox"
+            name="hide"
+            id="checkbox-show"
+            v-model="filters.invested"
+          >
+          <label class="filters__bottom_hide-label-1" for="checkbox-show"></label>
+          <label class="filters__bottom_hide-label-2" for="checkbox-show">Hide my invested projects</label>
         </div>
-      </div>
-      <div class="filters__items_country filters__item">
-        <div class="filters__items_country-name item__name">Country</div>
-        <div class="filters__items_country-select item__select">
-          <select name="country" v-model="filters.country">
-            <option class="option-selected" value="select">Select</option>
-            <option value="Riga, Latvia">Latvia</option>
-            <option value="Paris, France">France</option>
-            <option value="Berlin, Germany">Germany</option>
-            <option value="Saint-Petersburg, Russia">Russia</option>
-            <option value="Chicago, USA">USA</option>
-            <option value="Venice, Italy">Italy</option>
-          </select>
+        <div class="filters__bottom_show">
+          <button
+            class="filters__bottom-show button"
+            @click="refreshFilters"
+          >Refresh filters</button>
         </div>
-      </div>
-      <div class="filters__items_project filters__item">
-        <div class="filters__items_project-name item__name">Project</div>
-        <div class="filters__items_project-select item__select">
-          <select name="project" v-model="filters.project">
-            <option class="option-selected" value="select">Select</option>
-            <option value="Renovation">Renovation</option>
-            <option value="New">New</option>
-            <option value="Best">Best</option>
-            <option value="Free">Free</option>
-            <option value="Amazing">Amazing</option>
-          </select>
-        </div>
-      </div>
-      <div class="filters__items_type filters__item">
-        <div class="filters__items_type-name item__name">Loan type</div>
-        <div class="filters__items_type-select item__select">
-          <select name="type" v-model="filters.type">
-            <option class="option-selected" value="select">Select</option>
-            <option value="low">from €100.000</option>
-            <option value="high">from €500.000</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="filters__bottom">
-      <div class="filters__bottom_hide">
-        <input type="checkbox" name="hide" id="checkbox-show" v-model="filters.invested">
-        <label class="filters__bottom_hide-label-1" for="checkbox-show"></label>
-        <label class="filters__bottom_hide-label-2" for="checkbox-show">Hide my invested projects</label>
-      </div>
-      <div class="filters__bottom_show">
-        <button class="filters__bottom-show button" @click="refreshFilters">Refresh filters</button>
       </div>
     </div>
   </div>
@@ -81,7 +111,7 @@ export default {
 
     data() {
       return {
-        filters: this.filtersData,
+        filtersHide: false,
       }
     },
 
@@ -91,6 +121,16 @@ export default {
         default() {
           return {};
         },
+        isHidden: false,
+      },
+    },
+
+    computed: {
+      filters() {
+        return this.filtersData;
+      },
+      buttonText() {
+        return this.filtersHide ? 'Show filters' : 'Hide filters';
       }
     },
 
@@ -98,13 +138,8 @@ export default {
       refreshFilters() {
         const refreshData = 'Select';
         this.$emit('refreshFilters', refreshData);
-        console.log('hihi');
-
-        // const rate = document.querySelector('rate');
-
-        // rate.options[0].selected = refreshData;
-      }
-    }
+      },
+    },
 }
 </script>
 
@@ -143,7 +178,13 @@ export default {
       img
         margin-left: $margin*3
 
+  &__element
+    display: flex
+    flex-direction: column
+    transition: 1s
+
   &__container
+    width: 100%
     display: flex
     justify-content: space-between
     align-items: center
@@ -214,4 +255,6 @@ export default {
       border-radius: 4px
       outline: none
 
+  .rotate
+    transform: rotate(180deg)
 </style>

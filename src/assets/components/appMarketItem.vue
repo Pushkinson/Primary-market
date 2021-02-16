@@ -114,7 +114,6 @@ export default {
           height: 130px
           border-radius: 50%
           border: 12px solid $main-green-color
-          // background: radial-gradient(ellipse at center, rgba(255,113,12,0) 60%, rgba(255,113,12,1) 51.5%, #fff 51.5%)
       &-left
         font-weight: 500
         font-size: 13px
@@ -125,8 +124,6 @@ export default {
       display: flex
       flex-direction: column
       justify-content: space-around
-      // padding-top: $padding*5
-      // padding-right: $padding*5
       &_target
         display: flex
         flex-direction: column
