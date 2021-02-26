@@ -3,11 +3,11 @@
     <div class="filters__button">
       <button class="filters__button-hide button"
         @click="filtersHide = !filtersHide"
-      >
-      {{ buttonText }}
+      >{{ buttonText }}
       <img
-        :class="{['rotate']: filtersHide}" :src="require('../images/arrow-down.svg')"
-        >
+        :class="{['rotate']: filtersHide}"
+        :src="require('../images/arrow-down.svg')"
+      >
       </button>
     </div>
     <div class="filters__element"
@@ -91,14 +91,24 @@
             id="checkbox-show"
             v-model="filters.invested"
           >
-          <label class="filters__bottom_hide-label-1" for="checkbox-show"></label>
-          <label class="filters__bottom_hide-label-2" for="checkbox-show">Hide my invested projects</label>
+          <label
+            class="filters__bottom_hide-label-1"
+            for="checkbox-show">
+          </label>
+          <label
+            class="filters__bottom_hide-label-2"
+            for="checkbox-show"
+          >
+            Hide my invested projects
+          </label>
         </div>
         <div class="filters__bottom_show">
           <button
             class="filters__bottom-show button"
             @click="refreshFilters"
-          >Refresh filters</button>
+          >
+            Refresh filters
+          </button>
         </div>
       </div>
     </div>

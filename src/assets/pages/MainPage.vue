@@ -15,7 +15,7 @@
         :filtersData="filters"
         @onFilterChange="onFilterChange"
         @refreshFilters="refreshFiltersData"
-        />
+      />
       <div class="market">
         <div class="market__wrapper">
           <app-market-item
@@ -32,7 +32,10 @@
           @click="getData"
         >
           <span>See more</span>
-          <img :src="require('../images/btn-arrow.svg')" alt="see more">
+          <img
+            :src="require('../images/btn-arrow.svg')"
+            alt="see more"
+          >
         </button>
       </div>
     </div>
